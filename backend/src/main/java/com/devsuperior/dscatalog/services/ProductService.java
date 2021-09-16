@@ -1,7 +1,10 @@
 package com.devsuperior.dscatalog.services;
 
+import com.devsuperior.dscatalog.DTO.CategoryDTO;
 import com.devsuperior.dscatalog.DTO.ProductDTO;
+import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.entities.Product;
+import com.devsuperior.dscatalog.repositories.CategoryRepository;
 import com.devsuperior.dscatalog.repositories.ProductRepository;
 import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
 import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
@@ -15,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 
+import java.time.Instant;
 import java.util.Optional;
 
 
@@ -24,6 +28,8 @@ public class ProductService {
     @Autowired
     private ProductRepository repository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAll(PageRequest request) {
@@ -40,19 +46,19 @@ public class ProductService {
 
     @Transactional
     public ProductDTO insert(ProductDTO obj) {
-        Product Product = new Product();
-        //Product.setName(obj.getName());
-        Product = repository.save(Product);
-        return new ProductDTO(Product);
+        Product product = new Product();
+        fromDTO(product, obj);
+        repository.save(product);
+        return new ProductDTO(product);
     }
 
     @Transactional
     public ProductDTO update(Long id, ProductDTO obj) {
         try {
-            Product Product = repository.getOne(id);
-            //Product.setName(obj.getName());
-            Product = repository.save(Product);
-            return new ProductDTO(Product);
+            Product product = repository.getOne(id);
+            fromDTO(product,obj);
+            product = repository.save(product);
+            return new ProductDTO(product);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Produto não encontrado");
         }
@@ -65,7 +71,21 @@ public class ProductService {
            throw new DatabaseException("Não é possível deletar esse produto");
        }
        catch(EmptyResultDataAccessException e){
-           throw new ResourceNotFoundException("Produto não encontrada");
+           throw new ResourceNotFoundException("Produto não encontrado");
        }
+    }
+
+    private void fromDTO(Product product, ProductDTO productDTO){
+        product.setName(productDTO.getName());
+        product.setPrice(productDTO.getPrice());
+        product.setDescription(productDTO.getDescription());
+        product.setImgUrl(productDTO.getImgUrl());
+        product.setDate(productDTO.getDate());
+
+        product.getCategories().clear();
+        for(CategoryDTO catDTO : productDTO.getCategories()){
+            Category category = categoryRepository.getOne(catDTO.getId());
+            product.getCategories().add(category);
+        }
     }
 }

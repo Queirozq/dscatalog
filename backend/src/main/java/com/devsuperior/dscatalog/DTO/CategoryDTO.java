@@ -3,11 +3,15 @@ package com.devsuperior.dscatalog.DTO;
 import com.devsuperior.dscatalog.entities.Category;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryDTO implements Serializable {
 
     private Long id;
     private String name;
+
+    private List<ProductDTO> products = new ArrayList<>();
 
     public CategoryDTO() {
     }

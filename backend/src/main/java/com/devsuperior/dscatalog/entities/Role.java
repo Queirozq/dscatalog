@@ -8,18 +8,17 @@ import java.util.Objects;
 @Table(name = "tb_role")
 public class Role implements Serializable {
 
-
-    private String authority;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String authority;
 
     public Role() {
     }
 
-    public Role(String authority, Long id) {
-        this.authority = authority;
+    public Role(Long id, String authority) {
         this.id = id;
+        this.authority = authority;
     }
 
     public String getAuthority() {

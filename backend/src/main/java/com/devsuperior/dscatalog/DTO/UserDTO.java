@@ -1,6 +1,10 @@
 package com.devsuperior.dscatalog.DTO;
 import com.devsuperior.dscatalog.entities.Role;
 import com.devsuperior.dscatalog.entities.User;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,8 +12,11 @@ import java.util.Set;
 public class UserDTO implements Serializable {
 
     private Long id;
+    @Size(min = 5, max = 20, message = "Campo deve ter entre 5 e 20 caracteres")
+    @NotBlank(message ="Campo obrigatório")
     private String firstName;
     private String lastName;
+    @Email(message = "Favor entrar com um email válido")
     private String email;
 
     private Set<RoleDTO> roles = new HashSet<>();

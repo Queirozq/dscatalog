@@ -1,6 +1,7 @@
 package com.devsuperior.dscatalog.DTO;
 import com.devsuperior.dscatalog.entities.User;
 
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

@@ -53,12 +53,12 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO update(Long id, UserDTO obj) {
+    public UserUpdateDTO update(Long id, UserUpdateDTO obj) {
         try {
             User user = repository.getOne(id);
             fromDTO(user,obj);
             user = repository.save(user);
-            return new UserDTO(user);
+            return new UserUpdateDTO(user);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Usuário não encontrado");
         }

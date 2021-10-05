@@ -2,8 +2,8 @@ package com.devsuperior.dscatalog.resources;
 
 import com.devsuperior.dscatalog.DTO.UserDTO;
 import com.devsuperior.dscatalog.DTO.UserInsertDTO;
-import com.devsuperior.dscatalog.entities.User;
 import com.devsuperior.dscatalog.services.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

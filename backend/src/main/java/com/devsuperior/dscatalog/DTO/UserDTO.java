@@ -1,5 +1,4 @@
 package com.devsuperior.dscatalog.DTO;
-import com.devsuperior.dscatalog.entities.Role;
 import com.devsuperior.dscatalog.entities.User;
 
 import javax.validation.constraints.Email;

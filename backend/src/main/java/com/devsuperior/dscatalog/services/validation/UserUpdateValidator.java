@@ -1,6 +1,7 @@
 package com.devsuperior.dscatalog.services.validation;
 
 import com.devsuperior.dscatalog.DTO.UserDTO;
+import com.devsuperior.dscatalog.DTO.UserUpdateDTO;
 import com.devsuperior.dscatalog.entities.User;
 import com.devsuperior.dscatalog.repositories.UserRepository;
 import com.devsuperior.dscatalog.resources.exceptions.FieldMessage;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid, UserDTO> {
+public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid, UserUpdateDTO> {
 
     @Autowired
     private UserRepository repository;
@@ -30,7 +31,7 @@ public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid,
     }
 
     @Override
-    public boolean isValid(UserDTO userDTO, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(UserUpdateDTO userDTO, ConstraintValidatorContext constraintValidatorContext) {
         List<FieldMessage> list = new ArrayList<>();
 
         @SuppressWarnings("unchecked")

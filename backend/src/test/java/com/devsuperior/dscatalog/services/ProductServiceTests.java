@@ -102,7 +102,7 @@ public class ProductServiceTests {
         Mockito.verify(repository, Mockito.times(1)).deleteById(dependentId);
     }
 
-    @Test
+    /*@Test
     void findAllPagedShouldReturnAPage(){
 
         Pageable pageable = PageRequest.of(2,2);
@@ -112,7 +112,7 @@ public class ProductServiceTests {
         Assertions.assertTrue(page1.hasContent());
         Assertions.assertNotNull(page1);
         Mockito.verify(repository).findAll(pageable);
-    }
+    }*/
 
     @Test
     void findByIdShouldReturnProductDTOWhenIdExists(){

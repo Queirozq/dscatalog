@@ -23,8 +23,10 @@ public class ProductResource {
 
 
      @GetMapping
-     public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable){
-          Page<ProductDTO> listDTO = service.findAll(pageable);
+     public ResponseEntity<Page<ProductDTO>> findAll(@RequestParam(value = "categoryId", defaultValue = "0")Long categoryId,
+                                                     @RequestParam(value = "name", defaultValue = "")String name,
+                                                     Pageable pageable){
+          Page<ProductDTO> listDTO = service.findAll(pageable, categoryId, name.trim());
           return ResponseEntity.ok().body(listDTO);
      }
 
@@ -47,9 +49,9 @@ public class ProductResource {
         return ResponseEntity.ok().body(obj);
     }
 
-     @DeleteMapping(value = "/{id}")
-     public ResponseEntity<Void> delete(@PathVariable Long id){
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
          service.delete(id);
          return ResponseEntity.noContent().build();
-     }
+    }
 }

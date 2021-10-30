@@ -16,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,8 +32,9 @@ public class ProductService {
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAll(Pageable pageable, Long categoryId, String name) {
         List<Category> cat = (categoryId == 0) ? null : List.of(categoryRepository.getOne(categoryId));
-        Page<Product> products = repository.findAllCustom(pageable, cat, name);
-        return products.map(x -> new ProductDTO(x));
+        Page<Product> products = repository.findAllCustom1(pageable, cat, name);
+        repository.findAllCustom2(products.getContent());
+        return products.map(x -> new ProductDTO(x, x.getCategories()));
     }
 
     @Transactional(readOnly = true)

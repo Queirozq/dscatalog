@@ -68,8 +68,10 @@ public class ProductServiceTests {
         Mockito.when(repository.getOne(existingId)).thenReturn(product);
         Mockito.when(repository.getOne(nonExistingId)).thenThrow(EntityNotFoundException.class);
 
-        Mockito.when(repository.findById(existingId)).thenReturn(Optional.of(product));
-        Mockito.when(repository.findById(nonExistingId)).thenThrow(ResourceNotFoundException.class);
+        Mockito.when(repository.findByIdCustom(existingId)).thenReturn(Optional.of(product));
+        Mockito.when(repository.findByIdCustom(nonExistingId)).thenThrow(ResourceNotFoundException.class);
+
+        Mockito.when(repository.findAllCustom1(ArgumentMatchers.any(), ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(page);
 
 
         Mockito.doNothing().when(repository).deleteById(existingId);
@@ -102,17 +104,16 @@ public class ProductServiceTests {
         Mockito.verify(repository, Mockito.times(1)).deleteById(dependentId);
     }
 
-    /*@Test
+    @Test
     void findAllPagedShouldReturnAPage(){
 
         Pageable pageable = PageRequest.of(2,2);
 
-        Page<ProductDTO> page1 = service.findAll(pageable);
+        Page<ProductDTO> page1 = service.findAll(pageable, 0L, "");
 
         Assertions.assertTrue(page1.hasContent());
         Assertions.assertNotNull(page1);
-        Mockito.verify(repository).findAll(pageable);
-    }*/
+    }
 
     @Test
     void findByIdShouldReturnProductDTOWhenIdExists(){
@@ -120,14 +121,14 @@ public class ProductServiceTests {
         ProductDTO productDTO = service.findById(existingId);
 
         Assertions.assertNotNull(productDTO);
-        Mockito.verify(repository).findById(existingId);
+        Mockito.verify(repository).findByIdCustom(existingId);
     }
 
     @Test
     void findByIdShouldThrowResourceNotFoundExceptionWhenIdDoesNotExists(){
 
         Assertions.assertThrows(ResourceNotFoundException.class, ()-> {service.findById(nonExistingId);});
-        Mockito.verify(repository).findById(nonExistingId);
+        Mockito.verify(repository).findByIdCustom(nonExistingId);
     }
 
     @Test

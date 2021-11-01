@@ -1,5 +1,6 @@
 package com.devsuperior.dscatalog.resources;
 import com.devsuperior.dscatalog.DTO.ProductDTO;
+import com.devsuperior.dscatalog.DTO.UriDTO;
 import com.devsuperior.dscatalog.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -42,6 +44,12 @@ public class ProductResource {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).body(obj);
      }
+
+    @PostMapping(value = "/image")
+    public ResponseEntity<UriDTO> uploadImage(@RequestParam("file") MultipartFile file){
+        UriDTO uriDTO = service.uploadFile(file);
+        return ResponseEntity.ok().body(uriDTO);
+    }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<ProductDTO> update(@PathVariable Long id, @Valid @RequestBody ProductDTO obj){

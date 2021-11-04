@@ -1,9 +1,13 @@
+import Navbar from 'components/Navbar';
 import './assets/styles/custom.scss';
 import './App.css';
 
 function App() {
-   return(
-   <h1>hello DSCatalog</h1>
+  return (
+    <>
+      <Navbar />
+      <h1>hello DSCatalog</h1>
+    </>
   );
 }
 
